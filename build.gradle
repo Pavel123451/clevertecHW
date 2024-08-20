@@ -1,0 +1,37 @@
+plugins {
+    id 'java-gradle-plugin'
+
+    id 'groovy'
+
+    id 'maven-publish'
+}
+
+group = 'org.example'
+version = '1.0.0'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+
+    testImplementation libs.spock.core
+
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+gradlePlugin {
+    // Define the plugin
+    plugins {
+        gittagplugin {
+            id = 'org.example.git-tag-plugin'
+            implementationClass = 'org.example.plugin.GitPlugin'
+        }
+    }
+}
+
+tasks.named('test') {
+    // Use JUnit Jupiter for unit tests.
+    useJUnitPlatform()
+}
